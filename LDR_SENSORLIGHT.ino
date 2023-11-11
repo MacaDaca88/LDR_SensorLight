@@ -26,8 +26,10 @@
 #define OFF 0
 #define ON 255
 #define SCREENTIME 5000
+#define PWROFF 5000
+
 // Predifed Pins or Chose your OWN uncomment
-//ldr ldr(A3, 13,1000);  // LDR = Pin Defined  (A3 , D13)  LED_BUILTIN on when Sensor powered
+//ldr ldr(A3, 13,5000,5000);  // LDR = Pin Defined  (A3 , D13)  LED_BUILTIN on when Sensor powered
 ldr ldr(LDR, LDRPWRPIN, PWRSAVE, SCREENTIME, LED, PWROFF);  // LDR = Pin Defined in Pins.h   (A3 , D13)  LED_BUILTIN on when Sensor powered
 //LdrLed ldrLed(9);  // Chose your own pin PWM
 ldrLed ldrLed(LED);  // Led for displaying reading   DEFAULT D9  PWM

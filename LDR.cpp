@@ -38,6 +38,7 @@ ldr::ldr(int Ldr, int LdrPwrPin, int PWRSAVE, int SCREENTIME, int Led, int PWROF
   _PWRSAVE = PWRSAVE;
   _SCREENTIME = SCREENTIME;
   _Led = Led;
+  _PWROFF = PWROFF;
 }
 
 void ldr::init() {
@@ -54,14 +55,14 @@ void ldr::off() {
 void ldr::on() {
   digitalWrite(_LdrPwrPin, HIGH);
   ledInstance.on();  // Turn on the LED
-  DisplayPWRsave();
+  DisplayPWRsave(_PWROFF);
 }
 
 void ldr::Read() {
   on();
   value = analogRead(_Ldr);
-  if (powerSave) {
-    DisplayPWRsave();  // Use _SCREENTIME directly
+  if (powerSave = true) {
+    DisplayPWRsave(_PWROFF);  // Use _SCREENTIME directly
   } else {
     Display(_SCREENTIME);
   }
@@ -93,7 +94,7 @@ void ldr::Display(int SCREENTIME) {
 
 void ldr::DisplayPWRsave(int PWROFF) {
   unsigned long time = millis();
-  if (time - oldTime >= _PWROFF) { // Fix the syntax error here
+  if (time - oldTime >= _PWROFF) {
     oldTime = time;
     _PWROFF = PWROFF;
     Serial.print("value  =  ");

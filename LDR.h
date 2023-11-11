@@ -8,7 +8,6 @@
 #endif
 
 class ldrLed {
-   bool powerSave;
 public:
   ldrLed(int Led);
   void init();
@@ -20,6 +19,8 @@ private:
 };
 
 class ldr {
+   bool powerSave;
+
 public:
   ldr(int Ldr, int LdrPwrPin, int PWRSAVE, int SCREENTIME, int Led, int PWROFF);
   void init();
