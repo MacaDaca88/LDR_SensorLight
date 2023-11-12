@@ -41,7 +41,5 @@ LED = LED??
 #error "Define New Board Or Pins"
 bool serial = false;
 
-
-
 #endif
 #endif

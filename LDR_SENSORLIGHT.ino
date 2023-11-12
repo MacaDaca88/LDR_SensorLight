@@ -25,7 +25,7 @@
 #define MAX 1023
 #define OFF 0
 #define ON 255
-#define SCREENTIME 5000
+#define SCREENTIME 500
 #define PWROFF 5000
 
 // Predifed Pins or Chose your OWN uncomment
@@ -45,11 +45,11 @@ void setup() {
 }
 
 void loop() {
+  ldr.PWRsave();  // Sleep till retest to save power
   ldr.Read();                          // Start with sensor on Take a reading  store in variable value
   ldrLed.adaptive(MIN, MAX, OFF, ON);  // Map and set LED brightness
-#if (value - oldLdr >= 600)
+#if (value - oldLdr >= 200)
   Serial.println("Turning on due to significant change in light level");
   value = oldLdr;
 #endif
-  ldr.PWRsave();  // Sleep till retest to save power
 }

@@ -26,7 +26,7 @@ void ldrLed::off() {
 }
 
 void ldrLed::adaptive(int MIN, int MAX, int ON, int OFF) {
-  output = map(value, MIN, MAX, ON, OFF);
+  output = map(value, MIN, MAX, OFF, ON);
   analogWrite(_Led, output);
 }
 
@@ -55,25 +55,22 @@ void ldr::off() {
 void ldr::on() {
   digitalWrite(_LdrPwrPin, HIGH);
   ledInstance.on();  // Turn on the LED
-  DisplayPWRsave(_PWROFF);
+  //DisplayPWRsave(_PWROFF);
 }
 
 void ldr::Read() {
   on();
   value = analogRead(_Ldr);
-  if (powerSave = true) {
-    DisplayPWRsave(_PWROFF);  // Use _SCREENTIME directly
-  } else {
-    Display(_SCREENTIME);
-  }
 }
 
 void ldr::PWRsave() {
-  if (value - oldLdr >= 700) {
-    Serial.println("Turning off due to significant light level Suggests Day Time");
+  if (value >= 700) {
+    powersave = true;
+    DisplayPWRsave(_PWROFF);
+  } else {
+    Display(_SCREENTIME);
+    powersave = false;
   }
-  oldLdr = value;
-  off();
 }
 
 void ldr::PWRsaveOff() {
@@ -85,10 +82,14 @@ void ldr::Display(int SCREENTIME) {
   if (time - oldTime >= _SCREENTIME) {
     oldTime = time;
     _SCREENTIME = SCREENTIME;
+    Serial.println("Turning off Powersave Mode Suggests Night Time");
+
     Serial.print("value  =  ");
     Serial.println(value);
     Serial.print("Output PWM  =  ");
     Serial.println(output);
+    Serial.print("PowerSave  =  ");
+    Serial.println(powersave);
   }
 }
 
@@ -97,9 +98,13 @@ void ldr::DisplayPWRsave(int PWROFF) {
   if (time - oldTime >= _PWROFF) {
     oldTime = time;
     _PWROFF = PWROFF;
+    Serial.println("Turning on Powersave Mode Suggests Day Time");
+
     Serial.print("value  =  ");
     Serial.println(value);
     Serial.print("Output PWM  =  ");
     Serial.println(output);
+    Serial.print("PowerSave  =  ");
+    Serial.println(powersave);
   }
 }

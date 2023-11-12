@@ -45,6 +45,7 @@ private:
   unsigned long oldTime;
   int oldLdr;
   int _PWROFF;
+  bool powersave;
 };
 
 #endif
